@@ -1,0 +1,11 @@
+# AnyCloud Studio
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+__pycache__/
+node_modules/
+data/**
+!data/README.md
+!data/sample*

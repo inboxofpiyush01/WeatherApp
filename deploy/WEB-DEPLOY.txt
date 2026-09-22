@@ -1,0 +1,13 @@
+Web deploy track for a project that also builds as Android.
+
+Detected web surface: web
+Package manifest: package.json
+Build command: npm run build
+Publish directory: dist
+
+Vercel: vercel deploy --prod --yes
+Render / Railway / Fly: use the generated service files; they publish the web build or container, not the APK.
+Netlify: netlify deploy --prod --build
+Docker Compose: local HTTP preview of the web surface.
+
+Pick one track per deploy. APK/AAB build remains available under Android APK/AAB Build and Firebase App Distribution.

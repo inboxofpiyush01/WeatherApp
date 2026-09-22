@@ -1,0 +1,34 @@
+name: Validate and build container
+
+on:
+  push:
+    branches: [main, 'anycloud/**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Resolve Docker build context
+        id: docker
+        shell: bash
+        run: |
+          dockerfile="$(find . -type f -iname Dockerfile -not -path './.git/*' | sort | head -n 1)"
+          if [ -z "$dockerfile" ]; then
+            echo "::error::No Dockerfile was found in the checked-out branch."
+            exit 1
+          fi
+          context="$(dirname "$dockerfile")"
+          echo "file=$dockerfile" >> "$GITHUB_OUTPUT"
+          echo "context=$context" >> "$GITHUB_OUTPUT"
+          echo "Using $dockerfile with build context $context"
+      - name: Build without pushing
+        shell: bash
+        run: docker build --file "${{ steps.docker.outputs.file }}" --tag "anycloud/weatherapp:ci" "${{ steps.docker.outputs.context }}"

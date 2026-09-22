@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: weatherapp
+    runtime: docker
+    region: 
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
