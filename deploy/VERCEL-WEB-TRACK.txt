@@ -1,0 +1,1 @@
+Vercel publishes the detected web surface (web), not the Android APK/AAB. Run: vercel deploy --prod --yes
